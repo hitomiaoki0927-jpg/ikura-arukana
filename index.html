@@ -1,0 +1,441 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>いくらあるかな？</title><style>body{font-family:Arial,'Hiragino Kaku Gothic ProN',sans-serif;margin:0;background:#f6f7fb;color:#222}main{max-width:1050px;margin:auto;padding:15px}h1{text-align:center;font-size:clamp(24px,4vw,38px)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin:12px 0}button,select,input{font-size:20px;padding:10px;border-radius:12px;border:2px solid #777;background:white}button{cursor:pointer}button:focus-visible,.coin:focus-visible{outline:4px solid #2475db}.bank{border:3px dashed #a2a2a2;border-radius:15px;min-height:105px;padding:12px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;background:white}.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:15px;border:2px solid #444}.lane{min-height:275px;border-right:2px solid #555;padding:8px;display:flex;align-items:center;flex-direction:column;gap:9px}.lane:last-child{border-right:0}.lane strong{font-size:clamp(15px,2.5vw,24px)}.lane[data-i="0"]{background:#e4ffc5}.lane[data-i="1"]{background:#fff3c4}.lane[data-i="2"]{background:#8cddf9}.lane[data-i="3"]{background:#ffdcdc}.slot{display:grid;grid-template-rows:repeat(5,42px);grid-auto-columns:minmax(38px,1fr);grid-auto-flow:column;align-content:start;justify-content:start;gap:4px;flex:1;width:100%;min-height:230px;overflow-x:auto;overflow-y:hidden}.coin{position:relative;overflow:hidden;width:clamp(58px,8.4vw,82px);height:clamp(58px,8.4vw,82px);border-radius:50%;border:4px solid #8a8a8a;box-shadow:inset 0 1px 1px #fff9,inset 0 -3px 6px #0003,1px 3px 4px #0002;background:#ddd;display:inline-flex;justify-content:center;align-items:center;touch-action:none;user-select:none;cursor:grab;padding:0}.coin::before{content:"";position:absolute;inset:6% 6%;border-radius:50%;pointer-events:none;box-shadow:inset 0 0 0 1px #ffffff88}.coin::after{content:"";position:absolute;inset:10% 18% auto auto;width:38%;height:18%;border-radius:50%;background:linear-gradient(to bottom,#ffffffb8,#ffffff08);transform:rotate(-18deg);pointer-events:none}.coin[data-v="1"]{background:radial-gradient(circle at 32% 28%,#fafbfd 0 18%,#e0e4e9 34%,#b9c0c9 63%,#9097a1 100%);border-color:#8c949e;color:#39424b}.coin[data-v="5"]{background:radial-gradient(circle at 32% 28%,#fff7d2 0 14%,#f0db8f 32%,#d7b44f 66%,#af8732 100%);border-color:#9f7a2d;color:#6b4e14}.coin[data-v="10"]{background:radial-gradient(circle at 32% 28%,#ffd6bf 0 12%,#d9a181 28%,#c17f58 63%,#8b5334 100%);border-color:#8c5538;color:#5f311a}.coin[data-v="50"]{background:radial-gradient(circle at 32% 28%,#fdfefe 0 16%,#e5e9ee 38%,#c5ccd4 67%,#98a1aa 100%);border-color:#9099a3;color:#4e5660}.coin[data-v="100"]{background:radial-gradient(circle at 32% 28%,#ffffff 0 16%,#e5e9ee 38%,#c4cbd3 67%,#96a0aa 100%);border-color:#8f98a2;color:#49515a}.coin[data-v="500"]{background:radial-gradient(circle at 32% 28%,#fff6d6 0 14%,#e7d391 35%,#d1bb69 67%,#9e8950 100%);border-color:#8e7848;color:#675a35}.coin.bill{width:118px;height:72px;border-radius:10px;background:linear-gradient(135deg,#eff3ef 0%,#d6ebe3 38%,#c8d7f0 62%,#e9f1e6 100%);border:3px solid #7b9186;box-shadow:inset 0 0 0 2px #f8fffc,inset 0 0 0 7px #bfd1c7,1px 3px 4px #0002;color:#2f4f48}.coin.bill::before{content:"";position:absolute;inset:11px 16px;border-radius:8px;pointer-events:none;background:linear-gradient(90deg,#0000 0 8%,#90a9a240 8% 12%,#0000 12% 88%,#90a9a240 88% 92%,#0000 92% 100%),radial-gradient(circle at 50% 50%,#ffffffd8 0 28%,#d4e6dcaa 29% 44%,#0000 45%)}.coin.bill::after{content:"";position:absolute;right:10px;top:8px;width:34px;height:16px;border-radius:50%;background:linear-gradient(to bottom,#ffffffd0,#ffffff10)}.slot .coin{width:38px;height:38px;aspect-ratio:1/1;min-width:0;min-height:0;box-sizing:border-box;border-width:2px;border-radius:50%;align-self:start;justify-self:center;box-shadow:inset 0 1px 1px #fff8,inset 0 -2px 4px #0003,1px 2px 1px #0002}.slot .coin::before{inset:7% 7%}.slot .coin::after{inset:10% 18% auto auto}.slot .coin.big{border-radius:50%;writing-mode:horizontal-tb}.slot .coin.bill{width:38px;height:38px;border-radius:8px}.slot .coin.bill::before{inset:5px 6px;border-radius:5px}.slot .coin.bill::after{right:4px;top:4px;width:12px;height:7px}.coin-face,.bill-face{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%}.money-svg{width:100%;height:100%;display:block}.money-svg text{font-family:"Hiragino Mincho ProN","Yu Mincho",serif}.coin.selected{outline:5px solid #ec4e19}.answers{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid #444;border-top:0}.answer{min-height:65px;border-right:2px solid #444;background:white;text-align:center;font-size:clamp(16px,3vw,28px);font-weight:bold;padding:8px 2px}.answer:last-child{border:0}.answer input{width:76%;max-width:125px;font-size:clamp(20px,3vw,30px);font-weight:bold;text-align:center;border:2px solid #888;border-radius:7px;padding:6px 2px}.digit-bank{background:#fff;border:3px solid #777;border-radius:16px;padding:12px;margin:12px auto 2px;max-width:790px}.digit-bank h2{text-align:center;font-size:23px;margin:2px 0 8px}.digits{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.digit-card{font-size:27px;font-weight:bold;width:56px;height:62px;padding:0;border:2px solid #555;border-radius:10px;background:#fff6cd;touch-action:none}.digit-card.selected{outline:4px solid #ea6426;background:#ffdda0}.answer{position:relative}.answer input.digit-target{width:92%;max-width:none;box-sizing:border-box;min-height:50px}.answer input.digit-target.over{background:#d9f5da;border-color:#198447}.answer .erase{font-size:15px;padding:3px 8px;border:1px solid #aaa;margin:5px auto 0;display:block}.yen-outside{position:absolute;right:-32px;top:17px;font-size:25px;font-weight:bold;z-index:2}.answers{margin-right:33px}.teacher{margin:8px auto;text-align:center}.teacher summary{cursor:pointer;color:#555;font-size:15px}.teacher .toolbar{padding:8px;background:#eee;border-radius:10px}.result{text-align:center;font-size:25px;font-weight:bold;min-height:0;margin:3px 0;line-height:1.35}.result:empty{display:none}.hint{text-align:center;font-size:18px}.controls{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:3px 0 8px}#check{background:#ffe47a}#next{background:#c9edc7}@media(max-width:520px){.lane{min-height:230px;padding:4px}.slot{min-height:205px;grid-template-rows:repeat(5,36px);grid-auto-columns:minmax(32px,1fr)}.coin{border-width:3px}.slot .coin{width:32px;height:32px}.answer{min-height:45px}}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;min-height:85px}
+.topbar h1{flex:1;text-align:center;margin:16px 0 12px;padding-left:175px}
+.settings{width:260px;flex-shrink:0;display:flex;align-items:flex-end;flex-direction:column;gap:2px}
+.settings>.toolbar{margin:0;justify-content:flex-end;gap:4px}
+.settings label{font-size:15px;white-space:nowrap}
+.settings select{font-size:15px;padding:6px 4px;border-radius:7px}
+.teacher{margin:0;text-align:right;width:100%}
+.teacher summary{font-size:14px}
+.teacher[open] .toolbar{position:absolute;right:0;top:85px;z-index:9;display:flex;flex-direction:column;align-items:flex-end;background:#f0f0f0;border:1px solid #bbb;padding:12px;box-shadow:0 4px 10px #0002}
+.teacher[open] input{width:100px}
+#wrong-overlay{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:999;padding:11px 23px;background:#fff9ef;border:2px solid #dca9a0;border-radius:13px;box-shadow:0 3px 12px #0002;font-size:clamp(20px,3.3vw,30px);font-weight:700;color:#a54a3c;pointer-events:none;white-space:nowrap}
+#wrong-overlay.visible{display:block;animation:popwrong .15s ease-out}
+#correct-overlay{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1000;padding:28px 68px;background:#fff7cd;border:5px solid #e9ae23;border-radius:24px;box-shadow:0 9px 32px #0004;font-size:clamp(52px,10vw,100px);font-weight:900;color:#d0710b;pointer-events:none;white-space:nowrap}
+#correct-overlay.visible{display:block;animation:popwrong .2s ease-out}
+#amount-overlay{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;background:#fffdf1;border:4px solid #e9ae23;border-radius:24px;box-shadow:0 8px 30px #0003;padding:18px 38px;text-align:center;pointer-events:none;max-width:90vw;box-sizing:border-box}
+#amount-overlay.visible{display:block;animation:popwrong .2s ease-out}
+#amount-overlay ruby{font-size:clamp(42px,8vw,85px);font-weight:900;color:#b75c10;ruby-position:over;white-space:nowrap}
+#amount-overlay rt{font-size:clamp(14px,2.5vw,25px);font-weight:700;line-height:1.6;color:#5d4937}
+
+@keyframes popwrong{from{opacity:0;transform:translate(-50%,-50%) scale(.8)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@media(max-width:680px){.topbar{min-height:100px}.topbar h1{padding-left:0;text-align:left;font-size:clamp(22px,5vw,32px);margin-top:24px}.settings{width:165px}.settings select{max-width:130px}.teacher summary{font-size:12px}.teacher[open] .toolbar{top:96px}}
+
+/* 数字が未入力の欄だけをやさしく点滅させる */
+.answer input.needs-attention{border:4px solid #e48b00;animation:attentionGlow .75s ease-in-out infinite alternate;background:#fff9dc}
+@keyframes attentionGlow{from{border-color:#e48b00;box-shadow:0 0 0 1px #edb842}to{border-color:#ffe400;box-shadow:0 0 0 7px #ffd84b99}}
+@media(prefers-reduced-motion:reduce){.answer input.needs-attention{animation:none;box-shadow:0 0 0 5px #ffd84b99}}
+
+.coin.exchanging{animation:coinPulse .7s ease-in-out both;pointer-events:none}
+@keyframes coinPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.18);filter:brightness(1.25)}90%{opacity:.6}}
+.coin.arriving{pointer-events:none;position:relative;z-index:3}
+/* 位ごとの読みは、回答した数字の真上に表示する */
+.answer{display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.place-reading{min-height:1.6em;font-size:clamp(11px,1.6vw,19px);font-weight:800;color:#664c2f;white-space:nowrap;visibility:hidden;line-height:1.5;}
+.place-reading.visible{visibility:visible}
+.answer.reading-now input{box-shadow:0 0 0 5px #f6b83b;transition:box-shadow .2s}
+.answer.reading-now .place-reading{color:#b25b00}
+
+/* 公式画像の上に枠や輝きの効果を重ねず、写真の色をそのまま見せる */
+.coin:has(.official-money-photo)::before,.coin:has(.official-money-photo)::after{display:none}
+.coin:has(.official-money-photo){border:1px solid #999;background:#fff}
+.coin.photo-loaded{background:#fff}
+.photo-face{position:relative;overflow:hidden;width:100%;height:100%;display:block}
+.money-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.photo-face.photo-loaded .money-fallback{display:none}
+.official-money-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;pointer-events:none}
+.coin.bill .official-money-photo{object-fit:contain;background:white}
+.coin .official-money-photo.fivehundred-photo{width:305%;height:auto;max-width:none;top:50%;left:-99.5%;right:auto;bottom:auto;transform:translateY(-50%);object-fit:initial}
+.coin.bill{border:1px solid #7b9186}
+.coin.bill .photo-face{border-radius:3px}
+.exchange-flying{position:fixed;z-index:1100;pointer-events:none;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 4px 9px #0005)}
+.exchange-flying .coin{cursor:default;pointer-events:none;flex-shrink:0;transform:none!important;animation:none!important}
+</style></head><body><main><header class="topbar"><h1>いくらあるかな？</h1><div class="settings"><div class="toolbar"><label>レベル <select id="level"><option value="1">1 かんたん</option><option value="2">2 ふつう</option><option value="3">3 むずかしい</option><option value="4">4 超むず</option></select></label></div><details class="teacher"><summary>せんせい用：金額を指定する</summary><div class="toolbar"><label>もんだいの きんがく <input id="target" type="number" min="1" max="9999" step="1" style="width:110px" aria-label="問題の金額"></label><button id="make">この金額でつくる</button></div></details></div></header><div id="wrong-overlay" role="status" aria-live="polite">ちがうよ</div><div id="correct-overlay" role="status" aria-live="polite">正解！</div><div id="amount-overlay" role="status" aria-live="polite"></div><p class="hint">おかねを つかんで、あう へやに いれよう。タップしてから へやをタップしても OK！</p><div id="bank" class="bank" aria-label="ばらばらのお金"></div><div class="lanes"><div class="lane" data-i="0"><strong>１０００のへや</strong><div class="slot" data-i="0"></div></div><div class="lane" data-i="1"><strong>１００のへや</strong><div class="slot" data-i="1"></div></div><div class="lane" data-i="2"><strong>１０のへや</strong><div class="slot" data-i="2"></div></div><div class="lane" data-i="3"><strong>１のへや</strong><div class="slot" data-i="3"></div></div></div><div class="answers"><div class="answer"><span class="place-reading" id="reading0" aria-hidden="true"></span><input class="digit-target" id="a0" type="text" inputmode="numeric" pattern="[0-9]*" aria-label="1000のへやの金額"></div><div class="answer"><span class="place-reading" id="reading1" aria-hidden="true"></span><input class="digit-target" id="a1" type="text" inputmode="numeric" pattern="[0-9]*" aria-label="100のへやの金額"></div><div class="answer"><span class="place-reading" id="reading2" aria-hidden="true"></span><input class="digit-target" id="a2" type="text" inputmode="numeric" pattern="[0-9]*" aria-label="10のへやの金額"></div><div class="answer"><span class="place-reading" id="reading3" aria-hidden="true"></span><input class="digit-target" id="a3" type="text" inputmode="numeric" pattern="[0-9]*" aria-label="1のへやの金額"><span class="yen-outside">円</span></div></div><section class="digit-bank" aria-label="数字カード"><h2>すうじカード</h2><div class="digits" id="digits"></div><p class="hint">すうじを きんがくの らんに はこぼう。カードを タップしてから らんを タップしても OK！</p></section><div id="result" class="result" aria-live="polite"></div><div class="controls"><button id="check">こたえを かくにん</button><button id="reset">もとにもどす</button><button id="next">つぎの もんだい</button></div></main><script>const bank=document.getElementById('bank'),slots=[...document.querySelectorAll('.slot')],target=document.getElementById('target'),level=document.getElementById('level'),result=document.getElementById('result');let selected=null,expected=0,seq=0;let isExchanging=false,exchangeGeneration=0;const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));const group=v=>v>=1000?0:v>=100?1:v>=10?2:3;
+function greedy(n,vals){const a=[];for(const v of vals){while(n>=v){a.push(v);n-=v}}return a}
+function moneySVG(v){
+  if(v===1000){
+    return `<svg class="money-svg" viewBox="0 0 240 145" aria-hidden="true">
+      <defs>
+        <linearGradient id="billbg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f4f6ee"/>
+          <stop offset=".28" stop-color="#dbece0"/>
+          <stop offset=".56" stop-color="#dce5f2"/>
+          <stop offset="1" stop-color="#eef3e8"/>
+        </linearGradient>
+        <pattern id="guilloche" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M0 10 Q5 1 10 10 T20 10" fill="none" stroke="#84a59c" stroke-opacity=".22" stroke-width="1"/>
+          <path d="M10 0 Q19 5 10 10 T10 20" fill="none" stroke="#86a69d" stroke-opacity=".16" stroke-width="1"/>
+        </pattern>
+        <linearGradient id="seal" x1="0" x2="1">
+          <stop offset="0" stop-color="#a1b8ad"/>
+          <stop offset="1" stop-color="#728d83"/>
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="232" height="137" rx="10" fill="url(#billbg)" stroke="#728d83" stroke-width="3"/>
+      <rect x="11" y="11" width="218" height="123" rx="8" fill="url(#guilloche)" stroke="#b5cabf" stroke-width="1.6"/>
+      <rect x="18" y="18" width="204" height="109" rx="7" fill="none" stroke="#6f8a7f" stroke-width="1.4"/>
+      <rect x="24" y="24" width="192" height="97" rx="6" fill="none" stroke="#c8d8cf" stroke-width="1" stroke-dasharray="2.2 2.8"/>
+
+      <ellipse cx="58" cy="73" rx="29" ry="33" fill="#f6fbf7" stroke="#90a79c" stroke-width="1.8"/>
+      <ellipse cx="58" cy="73" rx="20" ry="24" fill="#d8e7dc" opacity=".75"/>
+      <path d="M49 92 q3-13 4-26 q1-9 0-16 q6 1 11 8 q6 8 5 18 q-1 8-4 12 q-5 6-16 4z" fill="#738a80" opacity=".48"/>
+      <path d="M49 58 q6-10 15-8" fill="none" stroke="#6c857b" stroke-width="2" opacity=".55"/>
+
+      <rect x="96" y="45" width="75" height="54" rx="6" fill="#eef4f0" stroke="#8ba399" stroke-width="1.2"/>
+      <circle cx="133.5" cy="72" r="20" fill="#d9e6dc" opacity=".78" stroke="#a2b6aa" stroke-width="1"/>
+      <text x="133.5" y="77" text-anchor="middle" font-size="25" fill="#426258" font-weight="700">1000</text>
+
+      <g fill="#546f64">
+        <text x="27" y="33" font-size="10.5" font-weight="700">日本銀行券</text>
+        <text x="210" y="33" text-anchor="end" font-size="10.5" font-weight="700">千円</text>
+        <text x="133" y="110" text-anchor="middle" font-size="12.5" font-weight="700">NIPPON GINKO</text>
+        <text x="28" y="119" font-size="14" font-weight="700">1000</text>
+        <text x="212" y="119" text-anchor="end" font-size="14" font-weight="700">1000</text>
+      </g>
+
+      <g fill="none" stroke="#87a49a" stroke-width="1.2" stroke-linecap="round">
+        <path d="M176 55 q10-10 20 0 q-10 10-20 0z"/>
+        <path d="M176 72 q10-10 20 0 q-10 10-20 0z"/>
+        <path d="M176 89 q10-10 20 0 q-10 10-20 0z"/>
+      </g>
+
+      <circle cx="190" cy="72" r="13" fill="none" stroke="url(#seal)" stroke-width="2.2"/>
+      <circle cx="190" cy="72" r="8" fill="none" stroke="#9ab1a7" stroke-width="1.2"/>
+      <path d="M183 72 h14 M190 65 v14" stroke="#7c988d" stroke-width="1.2"/>
+    </svg>`;
+  }
+  const theme={
+    1:{ring:'#7f8791',light:'#fdfefe',mid:'#d9dde2',dark:'#a0a8b1',txt:'#37404a',kanji:'一円',top:'日本国'},
+    5:{ring:'#9b7a2e',light:'#fff8de',mid:'#e4cb73',dark:'#b58d36',txt:'#6a4f18',kanji:'五円',top:'日本国'},
+    10:{ring:'#8f5639',light:'#ffd8c4',mid:'#d59b77',dark:'#9f6240',txt:'#5d311d',kanji:'十円',top:'日本国'},
+    50:{ring:'#88919a',light:'#ffffff',mid:'#dfe4e9',dark:'#a4adb5',txt:'#4d5660',kanji:'五十円',top:'日本国'},
+    100:{ring:'#86909a',light:'#ffffff',mid:'#dfe4e9',dark:'#a2abb4',txt:'#4c5560',kanji:'百円',top:'日本国'},
+    500:{ring:'#877348',light:'#fff6d5',mid:'#e0cf87',dark:'#ab955f',txt:'#635733',kanji:'五百円',top:'日本国'}
+  }[v];
+  const hole=(v===5||v===50);
+  const numSize=v===500?28:(String(v).length===3?29:(v===50?27:33));
+  const bottomY=83;
+  const wreathColor=theme.ring;
+  const petals = v===10 ? `
+      <path d="M33 70 q-9 -7 -10 -17 q10 3 16 12" fill="none" stroke="${wreathColor}" stroke-opacity=".5" stroke-width="1.5"/>
+      <path d="M67 70 q9 -7 10 -17 q-10 3 -16 12" fill="none" stroke="${wreathColor}" stroke-opacity=".5" stroke-width="1.5"/>
+    ` : `
+      <path d="M26 56 q7 14 18 18" fill="none" stroke="${wreathColor}" stroke-opacity=".45" stroke-width="1.5"/>
+      <path d="M74 56 q-7 14 -18 18" fill="none" stroke="${wreathColor}" stroke-opacity=".45" stroke-width="1.5"/>
+      <path d="M31 34 q8 -8 17 -11" fill="none" stroke="${wreathColor}" stroke-opacity=".38" stroke-width="1.3"/>
+      <path d="M69 34 q-8 -8 -17 -11" fill="none" stroke="${wreathColor}" stroke-opacity=".38" stroke-width="1.3"/>
+    `;
+  return `<svg class="money-svg" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <radialGradient id="g${v}" cx="32%" cy="26%" r="78%">
+        <stop offset="0%" stop-color="${theme.light}"/>
+        <stop offset="42%" stop-color="${theme.mid}"/>
+        <stop offset="100%" stop-color="${theme.dark}"/>
+      </radialGradient>
+      <filter id="engrave${v}" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy=".35" stdDeviation=".2" flood-color="#ffffff" flood-opacity=".6"/>
+      </filter>
+    </defs>
+    <circle cx="50" cy="50" r="47" fill="url(#g${v})" stroke="${theme.ring}" stroke-width="4"/>
+    <circle cx="50" cy="50" r="41" fill="none" stroke="#ffffff8d" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="36" fill="none" stroke="${theme.ring}" stroke-opacity=".35" stroke-width="1" stroke-dasharray="1.5 2.1"/>
+    <path d="M24 18 q26 -12 52 0" fill="none" stroke="#ffffffb8" stroke-width="2" stroke-linecap="round"/>
+    <text x="50" y="23" text-anchor="middle" font-size="8" fill="${theme.txt}" font-weight="700">${theme.top}</text>
+    ${hole?'<circle cx="50" cy="50" r="13" fill="#f6f7fb" stroke="#ffffff" stroke-width="1.1"/>':''}
+    <text x="50" y="'+(hole?48:56)+'" text-anchor="middle" font-size="'+numSize+'" fill="${theme.txt}" font-weight="700" filter="url(#engrave${v})">'+v+'</text>
+    <text x="50" y="'+bottomY+'" text-anchor="middle" font-size="9.5" fill="${theme.txt}" font-weight="700">'+theme.kanji+'</text>
+    ${wreathColor ? wreathColor && petals : ''}
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#00000010" stroke-width="1"/>
+  </svg>`;
+}
+// 日本銀行公式の貨幣・日本銀行券画像。通信不可の場合は従来の教材イラストを表示。
+const officialMoneyImages={
+  1:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_1b_01.jpg',
+  5:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_5b_03.jpg',
+  10:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_10b_02.jpg',
+  50:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_50b_03.jpg',
+  100:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_100b_03.jpg',
+  500:'https://www.boj.or.jp/note_tfjgs/note/valid/img/coin_500_bi.jpg',
+  1000:'https://www.boj.or.jp/note_tfjgs/note/valid/img/f1000f.png'
+};
+function renderMoneyFace(el,v){
+  el.classList.toggle('bill',v===1000);
+  const frame=document.createElement('span');
+  frame.className=(v===1000?'bill-face':'coin-face')+' photo-face';
+  const fallback=document.createElement('span');
+  fallback.className='money-fallback';
+  fallback.innerHTML=moneySVG(v);
+  const img=document.createElement('img');
+  img.className='official-money-photo'+(v===500?' fivehundred-photo':'');
+  img.alt='';img.draggable=false;
+  img.loading='eager';
+  img.onload=()=>{frame.classList.add('photo-loaded')};
+  img.onerror=()=>{frame.classList.remove('photo-loaded');img.style.display='none'};
+  img.src=officialMoneyImages[v];
+  frame.append(fallback,img);el.replaceChildren(frame);
+}
+function coinsFor(n,l){
+ if(l===1)return greedy(n,[100,10,1]);
+ if(l===2)return greedy(n,[500,100,50,10,1]);
+ if(l===3)return greedy(n,[1000,500,100,50,10,5,1]);
+ // 超むず：500円×2と50円×2を含める。大きい硬貨は両方とも所定の部屋へ。
+ // 金種の合計が問題の金額であり、10のまとまりが上の位へ繰り上がる。
+ let remaining=n, a=[];
+ if(remaining>=1100){a.push(500,500,50,50);remaining-=1100}
+ a.push(...greedy(remaining,[1000,500,100,50,10,5,1]));
+ return a;
+}function shuffled(a){return a.sort(()=>Math.random()-.5)}function addCoin(v){let b=document.createElement('button');b.className='coin'+([5,50,500].includes(v)?' big':'')+(v===1000?' bill':'');b.dataset.v=v;renderMoneyFace(b,v);b.setAttribute('aria-label',v+'円');b.draggable=true;b.id='coin'+(++seq);b.addEventListener('dragstart',e=>{selected=b;e.dataTransfer.setData('text/plain',b.id)});b.addEventListener('click',()=>{if(selected===b){selected.classList.remove('selected');selected=null}else{if(selected)selected.classList.remove('selected');selected=b;b.classList.add('selected')}});bank.append(b)}function arrange(slot){
+  if(!slot||!slot.classList.contains('slot'))return;
+  const items=[...slot.children];
+  const large=items.filter(c=>c.classList.contains('big'));
+  const normal=items.filter(c=>!c.classList.contains('big'));
+  // 大きい硬貨は必ず左上から、それぞれ縦5マスを専有する。
+  // 小さい硬貨は大きい硬貨の右隣から、上→下に5枚ずつ。
+  [...large,...normal].forEach((coin,i)=>{
+    const column=i<large.length ? i+1 : large.length+1+Math.floor((i-large.length)/5);
+    const row=i<large.length ? 1 : (i-large.length)%5+1;
+    coin.style.gridColumn=String(column);
+    coin.style.gridRow=i<large.length?'1 / span 5':String(row);
+  });
+}
+function move(b,to){
+  if(!b||isExchanging)return;
+  if(to!==bank && group(Number(b.dataset.v))!==Number(to.dataset.i)){
+    showWrong();
+    b.classList.remove('selected');selected=null;return;
+  }
+  const from=b.parentElement;
+  to.append(b);
+  // 5円・50円・500円は2枚そろうと上の金種に交換する。
+  // 新しい硬貨・紙幣は正しい部屋へ自動的に入り、繰り返し交換できる。
+  arrange(from);arrange(to);
+  if(to!==bank) exchangePairs();
+  b.classList.remove('selected');selected=null;result.textContent='';
+}
+async function exchangePairs(){
+  if(isExchanging)return;
+  isExchanging=true;
+  const generation=exchangeGeneration;
+  const exchanges=[[500,1000],[50,100],[5,10]];
+  try{
+    for(const [oldValue,newValue] of exchanges){
+      const source=slots[group(oldValue)];
+      while(generation===exchangeGeneration){
+        const pair=[...source.children].filter(c=>Number(c.dataset.v)===oldValue).slice(0,2);
+        if(pair.length<2)break;
+        // 2枚がそろった状態を見せ、ゆっくり光ってから交換する。
+        pair.forEach(c=>c.classList.add('exchanging'));
+        await pause(750);
+        if(generation!==exchangeGeneration)return;
+        const rects=pair.map(c=>c.getBoundingClientRect());
+        const originX=(rects[0].left+rects[0].width/2+rects[1].left+rects[1].width/2)/2;
+        const originY=(rects[0].top+rects[0].height/2+rects[1].top+rects[1].height/2)/2;
+        // 元の2枚を消し、交換先の硬貨をいったん元の位置に大きく表示する。
+        // 交換中は元の硬貨のマスを確保し、隣の硬貨を動かさない。
+        pair.forEach(c=>{
+          if(selected===c)selected=null;
+          c.classList.remove('exchanging');
+          c.style.visibility='hidden';
+          c.style.pointerEvents='none';
+        });
+        const upgraded=document.createElement('button');
+        upgraded.type='button';
+        upgraded.className='coin arriving'+(newValue===1000?' bill':'');
+        upgraded.dataset.v=String(newValue);
+        renderMoneyFace(upgraded,newValue);
+        upgraded.setAttribute('aria-label',newValue+'円');
+        upgraded.draggable=true;
+        upgraded.id='coin'+(++seq);
+        upgraded.addEventListener('dragstart',e=>{if(isExchanging){e.preventDefault();return}selected=upgraded;e.dataTransfer.setData('text/plain',upgraded.id)});
+        upgraded.addEventListener('click',()=>{if(isExchanging)return;if(selected===upgraded){selected.classList.remove('selected');selected=null}else{if(selected)selected.classList.remove('selected');selected=upgraded;upgraded.classList.add('selected')}});
+        const destination=slots[group(newValue)];
+        destination.append(upgraded);
+        slots.forEach(arrange);
+        const end=upgraded.getBoundingClientRect();
+        upgraded.style.visibility='hidden';
+        const size=newValue===1000?{width:105,height:64}:{width:62,height:62};
+        // 画面に浮かべた交換後のお金を、移動せずその場で見せる。
+        const flying=document.createElement('div');
+        flying.className='exchange-flying';
+        flying.style.width=size.width+'px';flying.style.height=size.height+'px';
+        flying.style.left=(originX-size.width/2)+'px';
+        flying.style.top=(originY-size.height/2)+'px';
+        const face=document.createElement('div');
+        face.className='coin'+(newValue===1000?' bill':'');
+        face.dataset.v=String(newValue);
+        renderMoneyFace(face,newValue);
+        face.style.width='100%';face.style.height='100%';face.style.boxSizing='border-box';
+        flying.append(face);document.body.append(flying);
+        playTransformSound();
+        await pause(1100);
+        if(generation!==exchangeGeneration){flying.remove();return}
+        // 変身したお金が見えている状態から、上の位の部屋へゆっくり移動。
+        const deltaX=end.left+end.width/2-originX;
+        const deltaY=end.top+end.height/2-originY;
+        const shrink=Math.min(end.width/size.width,end.height/size.height);
+        try{
+          const motion=flying.animate([
+            {transform:'translate(0,0) scale(1)',opacity:1},
+            {transform:`translate(${deltaX}px,${deltaY}px) scale(${shrink})`,opacity:1}
+          ],{duration:1350,easing:'ease-in-out',fill:'forwards'});
+          await motion.finished.catch(()=>{});
+        }finally{flying.remove()}
+        if(generation!==exchangeGeneration)return;
+        // 交換後のお金が着いてから、ほかの硬貨を整列させる。
+        pair.forEach(c=>c.remove());
+        arrange(source);
+        upgraded.style.visibility='';
+        upgraded.classList.remove('arriving');
+        await pause(250);
+      }
+    }
+  }finally{
+    if(generation===exchangeGeneration)isExchanging=false;
+  }
+}
+// 数字カードは何回でも使える。ドラッグ、またはタップして金額欄に入れる。
+let selectedDigit=null;
+const lastGood=['','','',''];
+function amountFor(i){return [...document.querySelectorAll('.coin')].filter(coin=>group(Number(coin.dataset.v))===i).reduce((sum,coin)=>sum+Number(coin.dataset.v),0)}
+function placeDigit(i){return String(Math.floor(expected / [1000,100,10,1][i]) % 10)}function validPrefix(i,entry){if(i===0 && expected<1000)return entry==='';if(entry==='')return true;if(!/^[0-9]+$/.test(entry))return false;return entry===placeDigit(i)}
+function rejectDigit(){showWrong()}
+let wrongTimer;function showWrong(){playWrongSound();const el=document.getElementById('wrong-overlay');el.classList.remove('visible');void el.offsetWidth;el.classList.add('visible');clearTimeout(wrongTimer);wrongTimer=setTimeout(()=>el.classList.remove('visible'),950)}
+const digitBox=document.getElementById('digits');
+const digitCards=[];
+for(let d=0;d<=9;d++){
+ const card=document.createElement('button');card.type='button';card.className='digit-card';card.textContent=String(d);card.dataset.digit=String(d);card.draggable=true;card.setAttribute('aria-label',d+'の数字カード');
+ card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain','digit:'+d);e.dataTransfer.effectAllowed='copy';});
+ card.addEventListener('click',()=>{digitCards.forEach(c=>c.classList.remove('selected'));if(selectedDigit===String(d)){selectedDigit=null}else{selectedDigit=String(d);card.classList.add('selected')}});
+ digitCards.push(card);digitBox.append(card);
+}
+for(let i=0;i<4;i++){
+ const field=document.getElementById('a'+i);
+ if(i===0){field.setAttribute('aria-label','1000のへやの数字（千の位がある場合）');}
+ const addDigit=d=>{if(!/^[0-9]$/.test(d))return;const next=field.value+d;if(!validPrefix(i,next)){rejectDigit();return}field.value=next;lastGood[i]=next;field.classList.remove('needs-attention');field.focus();result.textContent='';};
+ field.addEventListener('beforeinput',e=>{if(e.inputType.startsWith('delete'))return;if(e.inputType==='insertText'||e.inputType==='insertFromPaste'){const txt=e.data||e.dataTransfer?.getData('text')||'';const start=field.selectionStart??field.value.length,end=field.selectionEnd??field.value.length;const candidate=field.value.slice(0,start)+txt+field.value.slice(end);if(!validPrefix(i,candidate)){e.preventDefault();rejectDigit()}}});
+ field.addEventListener('input',()=>{if(!validPrefix(i,field.value)){field.value=lastGood[i];rejectDigit()}else{lastGood[i]=field.value;if(field.value.trim()!=='')field.classList.remove('needs-attention')}});
+ field.addEventListener('blur',()=>{if(!validPrefix(i,field.value))field.value=lastGood[i]});
+ field.addEventListener('dragover',e=>{if(e.dataTransfer.types.includes('text/plain')){e.preventDefault();field.classList.add('over')}});
+ field.addEventListener('dragleave',()=>field.classList.remove('over'));
+ field.addEventListener('drop',e=>{const data=e.dataTransfer.getData('text/plain');field.classList.remove('over');if(data.startsWith('digit:')){e.preventDefault();addDigit(data.slice(6))}});
+ field.addEventListener('click',()=>{if(selectedDigit!==null){addDigit(selectedDigit);selectedDigit=null;digitCards.forEach(c=>c.classList.remove('selected'))}});
+}
+
+function highlightMissing(){let hasMissing=false;for(let i=(expected>=1000?0:1);i<4;i++){const field=document.getElementById('a'+i);const missing=field.value.trim()==='';field.classList.toggle('needs-attention',missing);if(missing)hasMissing=true;}return hasMissing}
+function clearAttention(){document.querySelectorAll('.needs-attention').forEach(el=>el.classList.remove('needs-attention'))}
+function update(){/* 入力した答えは自動変更しない */}function clearAnswers(){for(let i=0;i<4;i++){document.getElementById('a'+i).value='';lastGood[i]=''}}function setup(n){readingGeneration++;exchangeGeneration++;isExchanging=false;if(window.speechSynthesis)window.speechSynthesis.cancel();clearTimeout(speechTimer);clearAttention();document.getElementById('wrong-overlay').classList.remove('visible');document.getElementById('correct-overlay').classList.remove('visible');hideAmount();clearTimeout(correctTimer);expected=n;target.value=n;bank.innerHTML='';slots.forEach(s=>s.innerHTML='');shuffled(coinsFor(n,Number(level.value))).forEach(addCoin);selected=null;selectedDigit=null;digitCards.forEach(c=>c.classList.remove('selected'));clearAnswers();result.textContent=''}function randomInt(min,max){return min+Math.floor(Math.random()*(max-min+1))}
+function next(){let l=Number(level.value),n;
+ if(l===1)n=randomInt(1,9)*100+randomInt(0,9)*10+randomInt(0,9);
+ else if(l===2)n=randomInt(1,8)*100+50+randomInt(0,4)*10+randomInt(0,9);
+ else if(l===3)n=randomInt(1,3)*1000+randomInt(0,4)*100+randomInt(0,1)*50+randomInt(0,4)*10+randomInt(0,1)*5+randomInt(0,4);
+ else n=1100+randomInt(0,2)*1000+randomInt(0,4)*100+randomInt(0,4)*10+randomInt(0,1)*5+randomInt(0,4);
+ setup(n);
+}for(let s of [...slots,bank]){s.addEventListener('dragover',e=>e.preventDefault());s.addEventListener('drop',e=>{e.preventDefault();let b=document.getElementById(e.dataTransfer.getData('text/plain'));move(b,s)});s.addEventListener('click',e=>{if(e.target.closest('.coin'))return;if(selected)move(selected,s)})}let correctTimer;function showCorrect(){const el=document.getElementById('correct-overlay');el.classList.remove('visible');void el.offsetWidth;el.classList.add('visible');clearTimeout(correctTimer);correctTimer=setTimeout(()=>el.classList.remove('visible'),2200)}
+// スマートフォンやiPadでも、操作に反応して鳴る短い電子音。
+let audioCtx=null;
+function soundContext(){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!audioCtx)audioCtx=new C();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});return audioCtx}
+function tone(ctx,frequency,offset,duration,volume=0.09,type='sine'){
+ const start=ctx.currentTime+offset,osc=ctx.createOscillator(),gain=ctx.createGain();
+ osc.type=type;osc.frequency.setValueAtTime(frequency,start);
+ gain.gain.setValueAtTime(0.0001,start);
+ gain.gain.exponentialRampToValueAtTime(volume,start+.012);
+ gain.gain.exponentialRampToValueAtTime(0.0001,start+duration);
+ osc.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+duration+.01);
+}
+function playTransformSound(){
+ try{
+   const ctx=soundContext();
+   if(ctx){tone(ctx,523.25,0,.17,.065,'triangle');tone(ctx,783.99,.13,.23,.07,'sine');tone(ctx,1046.5,.29,.42,.075,'triangle')}
+ }catch(e){}
+ try{
+   if('speechSynthesis' in window){
+     const utter=new SpeechSynthesisUtterance('へんしん！');
+     utter.lang='ja-JP';
+     // 高めでテンポのよい、キャラクター風の声。
+     utter.rate=1.28;utter.pitch=1.85;utter.volume=1;
+     const voices=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith('ja'));
+     const cheerful=voices.find(v=>/female|kyoko|haruka|nanami|sayaka|hikari/i.test(v.name));
+     if(cheerful)utter.voice=cheerful;
+     speechSynthesis.speak(utter);
+   }
+ }catch(e){}
+}
+function playWrongSound(){try{const ctx=soundContext();if(!ctx)return;tone(ctx,330,0,.12,.055,'sine');tone(ctx,265,.105,.16,.045,'sine')}catch(e){}}
+function playCorrectSound(){try{const ctx=soundContext();if(!ctx)return;
+ // 「ジャ・ジャーン！」：短い二つの強い音と最後の長い和音。
+ // ジャッ、ジャジャーン！ 低音を重ねた明るいブラス風。
+ const hit=(freq,time,duration,volume)=>{
+   tone(ctx,freq,time,duration,volume,'sawtooth');
+   tone(ctx,freq*2,time,duration,volume*.22,'triangle');
+ };
+ [392,493.88,587.33].forEach(f=>hit(f,0,.17,.035));
+ [440,554.37,659.25].forEach(f=>hit(f,.23,.17,.038));
+ [523.25,659.25,783.99,1046.5].forEach(f=>hit(f,.48,1.05,.046));
+ hit(261.63,.48,1.03,.06);
+ tone(ctx,1567.98,.54,.68,.033,'sine');
+ }catch(e){}}
+// 正解演出後、各部屋の数字の上にふりがなを出し、位ごとに間を空けて読む。
+let speechTimer=null,amountTimer=null,readingGeneration=0;
+const readingOnes=['ぜろ','いち','に','さん','よん','ご','ろく','なな','はち','きゅう'];
+const readingPlaces=[
+ ['','せん','にせん','さんぜん','よんせん','ごせん','ろくせん','ななせん','はっせん','きゅうせん'],
+ ['','ひゃく','にひゃく','さんびゃく','よんひゃく','ごひゃく','ろっぴゃく','ななひゃく','はっぴゃく','きゅうひゃく'],
+ ['','じゅう','にじゅう','さんじゅう','よんじゅう','ごじゅう','ろくじゅう','ななじゅう','はちじゅう','きゅうじゅう'],
+ readingOnes
+];
+function hideAmount(){
+ clearTimeout(amountTimer);
+ for(let i=0;i<4;i++){
+   const reading=document.getElementById('reading'+i);
+   reading.classList.remove('visible');reading.textContent='';
+   reading.parentElement.classList.remove('reading-now');
+ }
+ document.getElementById('amount-overlay').classList.remove('visible');
+}
+function scheduleAmountSpeech(amount){
+ clearTimeout(speechTimer);readingGeneration++;
+ const generation=readingGeneration;
+ if('speechSynthesis' in window)window.speechSynthesis.cancel();
+ hideAmount();
+ speechTimer=setTimeout(()=>{
+  if(generation!==readingGeneration)return;
+  const positions=[];
+  for(let i=0;i<4;i++){
+    const digit=Math.floor(amount/[1000,100,10,1][i])%10;
+    if(i===0&&digit===0)continue;
+    const reading=readingPlaces[i][digit]||'ぜろ';
+    // 0は「ぜろ」と読み、各部屋の数字を一つずつ確かめる。
+    positions.push({i,reading});
+  }
+  // 音声が使えない環境でも、順番にふりがなを表示する。
+  function runAt(index){
+   if(generation!==readingGeneration)return;
+   if(index>=positions.length){
+     document.querySelectorAll('.answer').forEach(el=>el.classList.remove('reading-now'));
+     const finish=()=>{if(generation===readingGeneration)amountTimer=setTimeout(hideAmount,2500)};
+     if(!('speechSynthesis' in window)){finish();return}
+     const yen=new SpeechSynthesisUtterance('えん');yen.lang='ja-JP';yen.rate=.8;
+     yen.onend=finish;yen.onerror=finish;window.speechSynthesis.speak(yen);
+     return;
+   }
+   const {i,reading}=positions[index];
+   document.querySelectorAll('.answer').forEach(el=>el.classList.remove('reading-now'));
+   const el=document.getElementById('reading'+i);
+   const reveal=()=>{if(generation!==readingGeneration)return;el.textContent=reading;el.classList.add('visible');el.parentElement.classList.add('reading-now')};
+   const next=()=>{if(generation===readingGeneration)amountTimer=setTimeout(()=>runAt(index+1),300)};
+   if(!('speechSynthesis' in window)){reveal();amountTimer=setTimeout(next,950);return}
+   const utterance=new SpeechSynthesisUtterance(reading);utterance.lang='ja-JP';utterance.rate=.74;
+   const japanese=window.speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith('ja'));
+   if(japanese)utterance.voice=japanese;
+   let done=false;
+   utterance.onstart=reveal;
+   utterance.onend=()=>{if(!done){done=true;reveal();next()}};
+   utterance.onerror=()=>{if(!done){done=true;reveal();next()}};
+   window.speechSynthesis.speak(utterance);
+   // 読み上げ開始通知が来ない環境への対策。
+   setTimeout(reveal,450);
+  }
+  runAt(0);
+ },2050);
+}
+document.getElementById('check').onclick=()=>{if(isExchanging){result.textContent='おかねが かわるのを まってね';return;}let all=slots.flatMap(s=>[...s.children]);const missing=highlightMissing();if(bank.children.length){result.textContent='まだ おかねが のこっているよ';return}if(missing){result.textContent='ひかっている らんに すうじを いれてね';return}let correctPlace=slots.every((s,i)=>[...s.children].every(b=>group(Number(b.dataset.v))===i));let correctNumbers=slots.every((s,i)=>{let input=document.getElementById('a'+i).value.trim().replace(/[０-９]/g,c=>String(c.charCodeAt(0)-65296));return (i===0 && expected<1000 && input==='') || input===placeDigit(i)});if(correctPlace&&correctNumbers){result.textContent='';showCorrect();playCorrectSound();scheduleAmountSpeech(expected)}else{result.textContent='もういちど かくにんしよう！ おかねの へやと かいた かずを みてね'};};document.getElementById('reset').onclick=()=>setup(expected);document.getElementById('next').onclick=next;document.getElementById('make').onclick=()=>{let n=Number(target.value);if(!Number.isInteger(n)||n<1||n>9999){result.textContent='1〜9999円を いれてね';return}setup(n)};level.onchange=next;setup(790);</script></body></html>
