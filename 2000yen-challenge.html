@@ -11,7 +11,19 @@ h2{font-size:clamp(20px,2.5vw,26px);margin:0 0 10px}.caption{color:#526174;font-
 .good img{width:100%;aspect-ratio:2.8/1;object-fit:contain;border-radius:8px;background:#fff}.good .add{display:flex;align-items:center;justify-content:center;gap:6px;font-size:clamp(15px,1.6vw,19px);font-weight:800;background:#e6f3ff;padding:7px;border-radius:10px}.good:disabled{opacity:.43;cursor:default}.good:focus-visible,.basket-item:focus-visible,.btn:focus-visible{outline:4px solid #ffad20;outline-offset:2px}.good:hover:not(:disabled){border-color:#2584bf}
 .good.sold{border-color:#8dd1a0}.sidebar{position:sticky;top:12px;display:grid;gap:13px}
 .budget{border:3px solid #c7dbf3;border-radius:15px;background:#f4faff;padding:14px 12px}.budget-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.budget-name{font-weight:800;font-size:21px}.budget-top strong{font-size:clamp(30px,3.9vw,46px);color:#124d86}.total-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:9px 0 4px}.total-row span{font-size:23px;font-weight:800}.total-row strong{font-size:clamp(34px,4vw,50px);color:#172f51;white-space:nowrap}
-.ruler{position:relative;margin:16px 4px 0}.meter{height:54px;position:relative;border:3px solid #324b68;border-radius:12px;overflow:hidden;background:repeating-linear-gradient(90deg,#f1f5fa 0 24.7%,#dce7f1 24.7% 25%)}.fill{height:100%;width:0;background:linear-gradient(90deg,#74d5a1,#1f9b63);transition:width .38s ease,background .18s ease}.meter.over .fill{background:linear-gradient(90deg,#ffba72,#e14343)}.limit{position:absolute;right:3px;top:0;bottom:0;border-right:3px dashed #334155;pointer-events:none}.ticks{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin:6px -3px 0}.balance{margin-top:13px;text-align:center;border-radius:10px;background:#e1f8e9;padding:13px 5px;font-weight:900;font-size:clamp(21px,2.7vw,30px);line-height:1.35}.balance.over{background:#fee3e3;color:#a21c1c}.balance.exact{background:#fff1b8;color:#825004}
+.ruler{position:relative;margin:16px 4px 0}.meter{height:54px;position:relative;border:3px solid #324b68;border-radius:12px;overflow:hidden;background:repeating-linear-gradient(90deg,#f1f5fa 0 24.7%,#dce7f1 24.7% 25%)}.fill{height:100%;width:0;background:linear-gradient(90deg,#74d5a1,#1f9b63);transition:width .38s ease,background .18s ease}.meter.over .fill{background:linear-gradient(90deg,#ffba72,#e14343)}
+.meter::after,.review-meter::after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+ background-image:
+   linear-gradient(to right,rgba(50,75,104,.58) 1px,transparent 1px),
+   linear-gradient(to right,rgba(50,75,104,.9) 2px,transparent 2px);
+ background-size:5% 38%,25% 70%;
+ background-position:left bottom,left bottom;
+ background-repeat:repeat-x;
+}
+.meter .fill,.review-meter .review-fill{position:relative;z-index:1}
+.limit{z-index:4}
+.limit{position:absolute;right:3px;top:0;bottom:0;border-right:3px dashed #334155;pointer-events:none}.ticks{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin:6px -3px 0}.balance{margin-top:13px;text-align:center;border-radius:10px;background:#e1f8e9;padding:13px 5px;font-weight:900;font-size:clamp(21px,2.7vw,30px);line-height:1.35}.balance.over{background:#fee3e3;color:#a21c1c}.balance.exact{background:#fff1b8;color:#825004}
 #warning{color:#ab1b1b;text-align:center;font-size:23px;font-weight:900;min-height:0;margin:5px 0 0}#warning:empty{display:none}.basket{min-height:120px;border:3px dashed #bacde0;background:#f7faff;border-radius:14px;padding:10px;display:grid;gap:8px;align-content:start}.basket.hover{border-color:#1d81d2;background:#e4f3ff}.basket-item{display:flex;align-items:center;gap:8px;min-height:64px;border:2px solid #cbd5e1;border-radius:11px;padding:5px 8px;background:#fff;text-align:left}.basket-item img{width:96px;height:51px;object-fit:contain;flex-shrink:0}.basket-item .info{display:flex;flex:1;flex-direction:column;gap:2px}.basket-item .info b{font-size:15px}.basket-item .info strong{font-size:20px}.basket-item .remove{color:#b91c1c;font-size:14px;font-weight:800;background:#fff2f2;padding:8px;border-radius:8px;white-space:nowrap}.empty{text-align:center;color:#617086;align-self:center;padding:24px 2px;font-size:18px;font-weight:700}.actions{display:flex;gap:9px}.btn{flex:1;border:2px solid #697b8e;border-radius:12px;padding:11px 7px;font-size:19px;font-weight:800;background:white}.btn.reset{background:#fff1da}.btn.sound{background:#e5f2ff}.message{font-size:15px;color:#526174;text-align:center;margin:0}.alarm-popup{position:fixed;z-index:15;top:49%;left:50%;transform:translate(-50%,-50%);border:4px solid #df4141;border-radius:19px;background:#fff4f4;color:#b42318;box-shadow:0 10px 35px #0004;padding:24px 30px;font-size:clamp(26px,5vw,45px);font-weight:900;white-space:nowrap;pointer-events:none;animation:pop .25s ease-out}.hidden{display:none!important}@keyframes pop{from{transform:translate(-50%,-50%) scale(.8);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static;order:-1}.goods{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:10px}}@media(max-width:510px){.goods{gap:7px}.good{padding:4px;border-width:2px}.good img{aspect-ratio:2.2/1}.good .add{font-size:14px}.basket-item img{width:72px;height:45px}.ticks{font-size:11px}.balance{font-size:22px}}
 @media(prefers-reduced-motion:reduce){.fill,.good{transition:none}.alarm-popup{animation:none}}
 
@@ -102,16 +114,45 @@ h2{font-size:clamp(20px,2.5vw,26px);margin:0 0 10px}.caption{color:#526174;font-
 .review-card-label{width:100%;display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:clamp(12px,2.2vh,20px);font-weight:900}.review-card-label span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.review-card-label b{background:#e4f2ff;border-radius:8px;padding:4px 8px;white-space:nowrap}
 .review-foot{flex:0 0 auto;background:white;border:2px solid #d6e5f4;border-radius:14px;padding:clamp(7px,1.4vh,13px) clamp(12px,2vw,24px);display:grid;grid-template-columns:minmax(145px,.75fr) minmax(200px,1.5fr) minmax(145px,.85fr);align-items:center;gap:clamp(8px,1.4vw,20px)}
 .review-money{display:flex;flex-direction:column;align-items:flex-start;font-weight:900}.review-money span{font-size:clamp(15px,2vh,20px)}.review-money strong{font-size:clamp(27px,4.4vh,45px);color:#143965;white-space:nowrap}
-.review-meter{height:clamp(27px,5vh,48px);border:3px solid #385477;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(90deg,#f1f5fa 0 24.7%,#dce7f1 24.7% 25%)}.review-fill{height:100%;width:0%;background:linear-gradient(90deg,#73d69f,#269d67)}.review-meter.over .review-fill{background:linear-gradient(90deg,#fca05a,#e43f42)}
+.review-meter{position:relative;height:clamp(27px,5vh,48px);border:3px solid #385477;border-radius:9px;overflow:hidden;background:repeating-linear-gradient(90deg,#f1f5fa 0 24.7%,#dce7f1 24.7% 25%)}.review-fill{height:100%;width:0%;background:linear-gradient(90deg,#73d69f,#269d67)}.review-meter.over .review-fill{background:linear-gradient(90deg,#fca05a,#e43f42)}
 .review-ticks{display:flex;justify-content:space-between;font-size:clamp(11px,1.7vh,16px);font-weight:700}.review-balance{text-align:center;font-size:clamp(17px,2.65vh,28px);font-weight:900;color:#147348}.review-balance.over{color:#b91c1c}.review-balance.exact{color:#aa6500}
 @media(min-width:650px) and (max-height:720px){.review-items{grid-auto-rows:minmax(120px,1fr)}.review-head h2{font-size:23px}.review-card{padding:4px}.review-card-label{font-size:13px}}
 @media(max-width:649px){.review-items{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(170px,1fr)}.review-foot{grid-template-columns:1fr;gap:6px}.review-money{flex-direction:row;justify-content:space-between;align-items:baseline}.review-screen{padding:8px}.review-head h2{font-size:20px}.review-back{font-size:13px;padding:7px 9px}}
+
+/* 100円ごとの数字を表示 */
+.detailed-ticks{
+ display:grid!important;
+ grid-template-columns:repeat(21,minmax(0,1fr))!important;
+ width:100%;
+ margin-top:5px!important;
+ font-size:clamp(6px,.72vw,9px)!important;
+ font-weight:800!important;
+ color:#334155;
+ line-height:1;
+}
+.detailed-ticks span{
+ text-align:center;
+ white-space:nowrap;
+ transform:translateX(-50%);
+}
+.detailed-ticks span:first-child{
+ text-align:left;
+ transform:none;
+}
+.detailed-ticks span:last-child{
+ text-align:right;
+ transform:none;
+}
+@media(max-width:900px){
+ .detailed-ticks{font-size:6px!important;letter-spacing:-.2px}
+}
+
 </style></head><body><main>
 <header><h1>🛍️ 2000円 おかいものチャレンジ</h1><p>すきな しょうひんを えらぼう！　2000円で かえるかな？</p></header>
 <div class="layout">
 <section class="panel" aria-label="しょうひんカード"><h2>① しょうひんを えらぼう</h2><p class="caption">カードを タップしてね。パソコンなら「かいものかご」へ ドラッグもできるよ。</p><div id="goods" class="goods"></div></section>
 <div class="sidebar">
-<section class="panel" aria-label="おかねのものさし"><h2>② いくらに なったかな？</h2><div class="budget"><div class="budget-top"><span class="budget-name">おこづかい</span><strong>2,000円</strong></div><div class="total-row"><span>ごうけい</span><strong id="total" aria-live="polite">0円</strong></div><div class="ruler"><div id="meter" class="meter" role="progressbar" aria-label="予算に対する金額" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="0"><div id="fill" class="fill"></div><div class="limit"></div></div><div class="ticks"><span>0</span><span>500</span><span>1000</span><span>1500</span><span>2000円</span></div></div><div id="balance" class="balance" aria-live="polite">あと 2,000円 つかえるよ</div><div id="warning" aria-live="assertive"></div></div></section>
+<section class="panel" aria-label="おかねのものさし"><h2>② いくらに なったかな？</h2><div class="budget"><div class="budget-top"><span class="budget-name">おこづかい</span><strong>2,000円</strong></div><div class="total-row"><span>ごうけい</span><strong id="total" aria-live="polite">0円</strong></div><div class="ruler"><div id="meter" class="meter" role="progressbar" aria-label="予算に対する金額" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="0"><div id="fill" class="fill"></div><div class="limit"></div></div><div class="ticks detailed-ticks"><span>0</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1,000</span><span>1,100</span><span>1,200</span><span>1,300</span><span>1,400</span><span>1,500</span><span>1,600</span><span>1,700</span><span>1,800</span><span>1,900</span><span>2,000円</span></div></div><div id="balance" class="balance" aria-live="polite">あと 2,000円 つかえるよ</div><div id="warning" aria-live="assertive"></div></div></section>
 <section class="panel"><h2>③ かったもの</h2><div id="basket" class="basket" aria-label="かいものかご"><div class="empty">ここに しょうひんを いれよう！</div></div></section>
 <div class="actions"><button class="btn decide" id="decide" type="button">✓ けってい</button><button class="btn reset" id="reset" type="button">↺ ぜんぶ もどす</button><button class="btn sound" id="sound" type="button" aria-pressed="true">🔊 おと ON</button></div><p class="message">かごの「もどす」で、しょうひんを 1つ もどせるよ。</p>
 </div>
@@ -120,7 +161,7 @@ h2{font-size:clamp(20px,2.5vw,26px);margin:0 0 10px}.caption{color:#526174;font-
  <div class="review-head"><h2>🛍️ えらんだ しょうひん</h2><button class="review-back" id="backToShop" type="button">↩ えらびなおす</button></div>
  <div id="reviewItems" class="review-items"></div>
  <div class="review-foot"><div class="review-money"><span>ごうけい</span><strong id="reviewTotal">0円</strong></div>
- <div><div class="review-meter" id="reviewMeter"><div id="reviewFill" class="review-fill"></div></div><div class="review-ticks"><span>0円</span><span>1,000円</span><span>2,000円</span></div></div>
+ <div><div class="review-meter" id="reviewMeter"><div id="reviewFill" class="review-fill"></div></div><div class="review-ticks detailed-ticks"><span>0</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1,000</span><span>1,100</span><span>1,200</span><span>1,300</span><span>1,400</span><span>1,500</span><span>1,600</span><span>1,700</span><span>1,800</span><span>1,900</span><span>2,000円</span></div></div>
  <div id="reviewBalance" class="review-balance"></div></div>
 </section>
 <div id="alarmPopup" class="alarm-popup hidden" role="alert">⚠️ 2000円を こえたよ！</div><div id="exactPopup" class="exact-popup hidden" role="status">ぴったり！<small>2,000円！</small></div>
@@ -176,10 +217,69 @@ function showExact(){
 }
 
 
+
+
+function playDecisionFanfare(){
+ if(!soundOn)return;
+ try{
+   const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
+   audioCtx ||= new Audio();audioCtx.resume?.();
+   const base=audioCtx.currentTime+.03;
+
+   // 「パン・パカ・パーン！」のイメージ。
+   // 短い和音を3回 → 最後に高く長い和音。
+   const hits=[
+     {t:0.00,d:.12,notes:[392.00,493.88,587.33],vol:.055}, // パン
+     {t:0.17,d:.10,notes:[440.00,554.37,659.25],vol:.050}, // パ
+     {t:0.30,d:.10,notes:[493.88,622.25,739.99],vol:.050}, // カ
+     {t:0.46,d:.78,notes:[523.25,659.25,783.99,1046.50],vol:.070} // パーン！
+   ];
+
+   for(const hit of hits){
+     for(const freq of hit.notes){
+       const osc=audioCtx.createOscillator();
+       const gain=audioCtx.createGain();
+       osc.type='sawtooth';
+       osc.frequency.setValueAtTime(freq,base+hit.t);
+       // 最後の「パーン」だけ少し上向きにきらめかせる
+       if(hit.d>.5){
+         osc.frequency.exponentialRampToValueAtTime(freq*1.015,base+hit.t+hit.d*.7);
+       }
+       gain.gain.setValueAtTime(.0001,base+hit.t);
+       gain.gain.exponentialRampToValueAtTime(hit.vol,base+hit.t+.012);
+       gain.gain.setValueAtTime(hit.vol,base+hit.t+Math.max(.02,hit.d*.55));
+       gain.gain.exponentialRampToValueAtTime(.0001,base+hit.t+hit.d);
+       osc.connect(gain);gain.connect(audioCtx.destination);
+       osc.start(base+hit.t);osc.stop(base+hit.t+hit.d+.03);
+     }
+   }
+
+   // 最後にシンバル風の「シャーン」を薄く重ねる
+   const dur=.55;
+   const buffer=audioCtx.createBuffer(1,Math.floor(audioCtx.sampleRate*dur),audioCtx.sampleRate);
+   const data=buffer.getChannelData(0);
+   for(let i=0;i<data.length;i++){
+     const env=1-i/data.length;
+     data[i]=(Math.random()*2-1)*env*env;
+   }
+   const noise=audioCtx.createBufferSource();
+   const filter=audioCtx.createBiquadFilter();
+   const ng=audioCtx.createGain();
+   noise.buffer=buffer;
+   filter.type='highpass';filter.frequency.value=2400;
+   ng.gain.setValueAtTime(.0001,base+.45);
+   ng.gain.exponentialRampToValueAtTime(.045,base+.48);
+   ng.gain.exponentialRampToValueAtTime(.0001,base+1.02);
+   noise.connect(filter);filter.connect(ng);ng.connect(audioCtx.destination);
+   noise.start(base+.45);noise.stop(base+1.05);
+ }catch(e){}
+}
+
 const reviewScreen=document.getElementById('reviewScreen');
 function showReview(){
  const chosen=ITEMS.filter(item=>quantity(item.id)>0);
  if(!chosen.length){document.getElementById('decide').focus();return;}
+ playDecisionFanfare();
  const container=document.getElementById('reviewItems');container.innerHTML='';
  for(const item of chosen){
    const count=quantity(item.id),card=document.createElement('article');card.className='review-card';
