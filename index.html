@@ -216,20 +216,20 @@ async function exchangePairs(){
   if(isExchanging)return;
   isExchanging=true;
   const generation=exchangeGeneration;
-  const exchanges=[[500,1000],[50,100],[5,10]];
+  const exchanges=[[500,1000,2],[100,500,5],[50,100,2],[10,50,5],[5,10,2]];
   try{
-    for(const [oldValue,newValue] of exchanges){
+    for(const [oldValue,newValue,requiredCount] of exchanges){
       const source=slots[group(oldValue)];
       while(generation===exchangeGeneration){
-        const pair=[...source.children].filter(c=>Number(c.dataset.v)===oldValue).slice(0,2);
-        if(pair.length<2)break;
+        const pair=[...source.children].filter(c=>Number(c.dataset.v)===oldValue).slice(0,requiredCount);
+        if(pair.length<requiredCount)break;
         // 2枚がそろった状態を見せ、ゆっくり光ってから交換する。
         pair.forEach(c=>c.classList.add('exchanging'));
         await pause(750);
         if(generation!==exchangeGeneration)return;
         const rects=pair.map(c=>c.getBoundingClientRect());
-        const originX=(rects[0].left+rects[0].width/2+rects[1].left+rects[1].width/2)/2;
-        const originY=(rects[0].top+rects[0].height/2+rects[1].top+rects[1].height/2)/2;
+        const originX=rects.reduce((sum,r)=>sum+r.left+r.width/2,0)/rects.length;
+        const originY=rects.reduce((sum,r)=>sum+r.top+r.height/2,0)/rects.length;
         // 元の2枚を消し、交換先の硬貨をいったん元の位置に大きく表示する。
         // 交換中は元の硬貨のマスを確保し、隣の硬貨を動かさない。
         pair.forEach(c=>{
@@ -240,7 +240,7 @@ async function exchangePairs(){
         });
         const upgraded=document.createElement('button');
         upgraded.type='button';
-        upgraded.className='coin arriving'+(newValue===1000?' bill':'');
+        upgraded.className='coin arriving'+([5,50,500].includes(newValue)?' big':'')+(newValue===1000?' bill':'');
         upgraded.dataset.v=String(newValue);
         renderMoneyFace(upgraded,newValue);
         upgraded.setAttribute('aria-label',newValue+'円');
